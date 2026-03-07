@@ -1,6 +1,6 @@
 ![](images/2025-02-12-18-36-04.png)
 
-Pada soal diberikan sebuah script encode string.
+Pada soal diberikan sebuah script Python yang digunakan untuk meng-encode string.
 ```python
 flag = "lactf{REDACTED}"
 extended_flag = ""
@@ -23,10 +23,12 @@ with open("chall.txt", "wb") as f:
     f.write(extended_flag.encode("iso8859-1"))
 ```
 
-Lalu diberikan juga sebuah string hasil encode
-==ìáãôæûÆõîîéìùßÅîïõçèßÔèéóßÌïïëóßÄéææåòåîôßÏîßÍáãßÁîäß×éîäï÷óý==
+Selain itu, diberikan juga sebuah string hasil encode:
+>==ìáãôæûÆõîîéìùßÅîïõçèßÔèéóßÌïïëóßÄéææåòåîôßÏîßÍáãßÁîäß×éîäï÷óý==
 
-Berdasarkan script encode, sepertinya saya hanya perlu mengubah biner 1 pertama kembali menjadi 0 dan balikin hasilnya ke string ASCII. Berikut scriptnya.
+Berdasarkan script encoding di atas proses encoding hanya mengubah bit 0 pertama menjadi 1. Untuk mendapatkan flag asli, kita cukup melakukan proses kebalikannya yaitu mengubah bit 1 pertama kembali menjadi 0 lalu mengonversi kembali hasil biner tersebut ke karakter ASCII.
+
+Berikut script Python untuk mengembalikan string encoded menjadi flag asli:
 ```python
 extended_flag = "ìáãôæûÆõîîéìùßÅîïõçèßÔèéóßÌïïëóßÄéææåòåîôßÏîßÍáãßÁîäß×éîäï÷óý"
 original_flag = ""
