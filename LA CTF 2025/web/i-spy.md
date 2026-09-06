@@ -1,27 +1,45 @@
 ![](images/2025-02-12-18-28-59.png)
 
-Pada soal diberikan sebuah web berikut.
+Pada challenge ini, diberikan sebuah website (`https://i-spy.chall.lac.tf/`).
 
 ![](images/2025-02-12-18-30-03.png)
 
-Tujuan dari challenge ini adalah menemukan token tersembunyi di berbagai tempat pada website untuk dapat melanjutkan ke stage berikutnya hingga akhirnya mendapatkan flag.
+Tujuan challenge adalah mengumpulkan 10 token secara berurutan. Setiap token yang dimasukkan ke form akan memberikan hint mengenai lokasi token berikutnya hingga akhirnya mendapatkan flag.
 
-Setiap stage memberikan sebuah hint mengenai lokasi token berikutnya. Dengan mengikuti petunjuk tersebut dan melakukan inspeksi pada berbagai bagian website (HTML, JavaScript, header, DNS, dll.), kita dapat menemukan semua token.
+Berikut petunjuk dan cara menemukan token di setiap stage:
 
-Berikut daftar hint dan cara menemukannya:
-1. **A token in the HTML source code.** Hint pertama menyebutkan bahwa token berada di HTML source code. Dengan membuka View Page Source, kita dapat menemukan token pertama yang tersembunyi di dalam HTML.
-2. **A token in the JavaScript console.** Hint berikutnya menyebutkan token ada di JavaScript console. Dengan membuka Developer Tools Console, akan muncul token yang dicetak melalui console.log().
-3. **A token in the stylesheet**. Token berikutnya berada di file CSS. Dengan membuka file stylesheet pada tab Sources atau Network, kita dapat menemukan token yang disisipkan di dalam komentar atau isi CSS.
-4. **A token in javascript code**. Token selanjutnya berada di dalam kode JavaScript. Dengan membuka file JavaScript yang digunakan oleh halaman, kita dapat menemukan token tersebut.
-5. **A token in a header.** Hint berikutnya menyebutkan token berada di header request API. Dengan membuka Developer Tools → Network, lalu melihat request ke API, token dapat ditemukan pada bagian HTTP headers.
-6. **A token in a cookie.** Token berikutnya berada di cookie browser. Cookie dapat dilihat melalui Developer Tools → Application → Cookies
-7. **A token where the robots are forbidden from visiting.** Hint berikutnya mengarah ke robots.txt. Akses /robots.txt dan di dalamnya terdapat path yang di-disallow /a-magical-token.txt
-8. **A token where Google is told what pages to visit and index.** Hint berikutnya menyebutkan token berada di tempat Google diberitahu halaman mana yang harus di-index File tersebut adalah /sitemap.xml.
-9. **A token received when making a DELETE request to this page.** Hint berikutnya menyebutkan token didapat dengan melakukan request DELETE ke halaman tersebut.
+1. **A token in the HTML source code**  
+   Buka *View Page Source* (`Ctrl + U`), token disisipkan di dalam komentar/elemen HTML.
 
-10. **A token in a TXT record at i-spy.chall.lac.tf.** Hint terakhir menyebutkan token berada pada DNS TXT record dari domain i-spy.chall.lac.tf. TXT record dapat dicek menggunakan web 
-https://www.nslookup.io/domains/i-spy.chall.lac.tf/dns-records/txt/
+2. **A token in the JavaScript console**  
+   Buka *Developer Tools → Console*, token dicetak langsung melalui `console.log()`.
+
+3. **A token in the stylesheet**  
+   Buka file stylesheet CSS halaman melalui tab *Sources* atau *Network*, token berada di dalam komentar CSS.
+
+4. **A token in javascript code**  
+   Periksa file JavaScript yang dimuat halaman, token tersimpan di dalam variabel/kode script.
+
+5. **A token in a header**  
+   Buka *Developer Tools → Network*, periksa response headers dari HTTP request halaman.
+
+6. **A token in a cookie**  
+   Buka *Developer Tools → Application → Cookies*, token tersimpan sebagai salah satu value cookie.
+
+7. **A token where the robots are forbidden from visiting**  
+   Buka file `/robots.txt`. Di dalamnya terdapat path yang di-*disallow* (`/a-magical-token.txt`) yang berisi token.
+
+8. **A token where Google is told what pages to visit and index**  
+   Buka file `/sitemap.xml` yang mengatur indeks mesin pencari, token tercantum di dalamnya.
+
+9. **A token received when making a DELETE request to this page**  
+   Kirim HTTP request dengan method `DELETE` ke URL website (misalnya via `curl -X DELETE https://i-spy.chall.lac.tf/` atau fungsi `fetch` di console). Token akan muncul pada response.
+
+10. **A token in a TXT record at i-spy.chall.lac.tf**  
+    Cek DNS TXT record pada domain `i-spy.chall.lac.tf` menggunakan command `dig TXT i-spy.chall.lac.tf +short` atau melalui tool online seperti [nslookup.io](https://www.nslookup.io/domains/i-spy.chall.lac.tf/dns-records/txt/).
+
+Setelah menginputkan token ke-10, website menampilkan flag akhir:
 
 ![](images/2025-02-12-18-34-29.png)
 
-**Flag : lactf{1_sp0773d_z_t0k3ns_4v3rywh3r3}**
+**Flag:** `lactf{1_sp0773d_z_t0k3ns_4v3rywh3r3}`

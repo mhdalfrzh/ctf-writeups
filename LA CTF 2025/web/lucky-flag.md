@@ -1,15 +1,19 @@
 ![](images/2025-02-12-18-24-56.png)
 
-Pada soal diberikan sebuah website yang menampilkan ribuan box flag. Dari sekian banyak box tersebut, hanya satu box yang berisi flag, dan flag akan muncul ketika box yang benar diklik.
+Pada challenge ini, diberikan sebuah website yang menampilkan ribuan kotak (*box*). Dari sekian banyak kotak tersebut, hanya ada satu kotak acak yang akan memunculkan flag saat diklik.
 
 ![](images/2025-02-12-18-25-48.png)
 
-Jika mencoba mencarinya secara manual dengan mengklik satu per satu box, tentu akan sangat memakan waktu. Oleh karena itu, langkah selanjutnya adalah melakukan analisis pada source code website. Setelah membuka Developer Tools dan melihat source code halaman, ditemukan sebuah script JavaScript yang digunakan untuk meng-generate flag.
+Mencari kotak yang benar secara manual tentu tidak efisien. Oleh karena itu, kita periksa source code JavaScript (`main.js`) melalui *Developer Tools → Sources*.
 
 ![](images/2025-02-12-18-27-22.png)
 
-Script tersebut berisi logika untuk menentukan posisi box yang sebenarnya berisi flag. Dengan menyalin dan menjalankan script tersebut di Developer Tools → Console, kita dapat langsung mengetahui flag yang dihasilkan.
+Pada `main.js`, sistem memilih satu kotak secara acak (`Math.random()`) dan memasang event listener `onclick` khusus. Di dalam handler tersebut, terdapat string terobfuskasi (`enc`) yang didekode menggunakan operasi XOR `0x62` untuk menghasilkan flag pada fungsi `alert()`.
+
+Kita tidak perlu mencari atau mengklik kotak yang benar. Cukup salin blok kode dekripsi flag tersebut lalu jalankan langsung di *Developer Tools → Console*:
 
 ![](images/2025-02-12-18-27-57.png)
 
-**Flag : lactf{w4s_i7_luck_0r_ski11}**
+Browser akan menampilkan pop-up alert berisi flag.
+
+**Flag:** `lactf{w4s_i7_luck_0r_ski11}`

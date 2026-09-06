@@ -1,17 +1,31 @@
 ![](images/2026-01-10-12-52-57.png)
 
-Pada soal diberikan sebuah teks terenkripsi. Nama soal interencdec merupakan hint bahwa pesan tersebut mengalami proses enkripsi dan dekripsi secara bergantian. Biasnya encoding yang digunakan adalah base64.
-```
+Pada challenge ini, kita diberikan sebuah file teks terenkripsi. Judul soal *interencdec* mengindikasikan bahwa pesan ini telah melalui beberapa lapisan *encoding* dan enkripsi.
+
+Isi teks awal:
+```text
 YidkM0JxZGtwQlRYdHFhR3g2YUhsZmF6TnFlVGwzWVROclh6ZzJhMnd6TW1zeWZRPT0nCg==
 ```
 
-Berikut hasil decode base64 yang pertama.
-![alt text](image.png)
+Pesan dapat dipecahkan dengan membongkar lapisannya satu per satu:
 
-Lalu ambil string dalam tanda petik untuk mendapatkan hasil decode yang kedua.
-![](images/2026-01-10-12-57-09.png)
+1. **Decode Base64 Pertama**  
+   Teks awal memiliki pola padding khas Base64 (`==`). Hasil decode pertama menghasilkan representasi string byte Python:
+   ```text
+   b'd3BqdkpBTXtqaGx6aHlfazNqeTl3YTNrXzg2a2wzMmsyfQ=='
+   ```
 
-Sepertinya hasil decode dari lapisan kedua adalah caesar chiper jadi langsung bisa kita decode lagi.
-![](images/2026-01-10-12-58-48.png)
+2. **Decode Base64 Kedua**  
+   Ambil string di dalam tanda petik (`d3Bqdkp...==`) lalu lakukan decode Base64 sekali lagi:
 
-**Flag : picoCTF{caesar_d3cr9pt3d_86de32d2}**
+   ![](images/2026-01-10-12-57-09.png)
+
+   Hasil decode lapisan kedua menghasilkan teks:  
+   `wpjvJAM{jhlzhy_k3jy9wa3k_86kl32k2}`
+
+3. **Dekripsi Caesar Cipher**  
+   Format teks di atas terlihat menyerupai format flag (`picoCTF{...}`). Dengan mendekripsinya menggunakan **Caesar Cipher** (rotasi/shift 19 atau mundur 7 huruf), kita mendapatkan flag akhir:
+
+   ![](images/2026-01-10-12-58-48.png)
+
+**Flag:** `picoCTF{caesar_d3cr9pt3d_86de32d2}`
